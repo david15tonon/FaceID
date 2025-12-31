@@ -1,0 +1,7 @@
+# Streamlit dependencies
+streamlit==1.29.0
+requests==2.31.0
+opencv-python==4.8.1.78
+numpy==1.24.3
+Pillow==10.1.0
+pandas==2.1.4
