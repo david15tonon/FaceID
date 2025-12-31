@@ -1,0 +1,575 @@
+import React, { useState } from 'react';
+import { Camera, Eye, Lock, User, Activity, FileText, Menu, X, Circle } from 'lucide-react';
+
+const FaceRecognitionApp = () => {
+  const [currentPage, setCurrentPage] = useState('landing');
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Dot Matrix Background Component
+  const DotMatrix = () => (
+    <div className="absolute inset-0 opacity-5 pointer-events-none">
+      <div className="grid grid-cols-20 gap-4 h-full">
+        {[...Array(400)].map((_, i) => (
+          <div key={i} className="w-1 h-1 bg-black rounded-full" />
+        ))}
+      </div>
+    </div>
+  );
+
+  // Landing Page
+  const LandingPage = () => (
+    <div className="min-h-screen bg-white text-black relative overflow-hidden">
+      <DotMatrix />
+      
+      {/* Header */}
+      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-black/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Circle className="w-6 h-6 fill-black" />
+            <span className="font-bold text-xl">FaceID</span>
+          </div>
+          <nav className="hidden md:flex gap-8 font-medium">
+            <button className="hover:text-red-600 transition">Features</button>
+            <button className="hover:text-red-600 transition">Security</button>
+            <button className="hover:text-red-600 transition">API</button>
+            <button className="hover:text-red-600 transition">Docs</button>
+          </nav>
+          <button 
+            onClick={() => setCurrentPage('login')}
+            className="bg-black text-white px-6 py-2 hover:bg-red-600 transition"
+          >
+            Login
+          </button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="text-red-600 font-bold mb-4 tracking-wider">NOTHING TO HIDE</div>
+              <h1 className="text-7xl md:text-8xl font-bold leading-none mb-6">
+                Face<br/>Recognition<br/>Redefined
+              </h1>
+              <p className="text-xl text-gray-600 mb-8 max-w-md">
+                Real-time identity verification with military-grade security. Nothing unnecessary. Everything essential.
+              </p>
+              <div className="flex gap-4">
+                <button 
+                  onClick={() => setCurrentPage('signup')}
+                  className="bg-black text-white px-8 py-4 text-lg font-bold hover:bg-red-600 transition"
+                >
+                  Start Free
+                </button>
+                <button className="border-2 border-black px-8 py-4 text-lg font-bold hover:bg-black hover:text-white transition">
+                  View Demo
+                </button>
+              </div>
+            </div>
+            
+            {/* Visual Element */}
+            <div className="relative">
+              <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-64 h-64 border-4 border-black relative">
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-red-600"></div>
+                    <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-red-600"></div>
+                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-red-600"></div>
+                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-red-600"></div>
+                    <Camera className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 text-black/20" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-black text-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-red-600 font-bold mb-4 tracking-wider">CAPABILITIES</div>
+          <h2 className="text-5xl font-bold mb-16">Nothing but power</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="border border-white/20 p-8 hover:border-red-600 transition">
+              <Eye className="w-12 h-12 mb-4" />
+              <h3 className="text-2xl font-bold mb-4">Real-time Recognition</h3>
+              <p className="text-gray-400">Instant identity verification in live video feeds with sub-second accuracy.</p>
+            </div>
+            
+            <div className="border border-white/20 p-8 hover:border-red-600 transition">
+              <Lock className="w-12 h-12 mb-4" />
+              <h3 className="text-2xl font-bold mb-4">Military Security</h3>
+              <p className="text-gray-400">End-to-end encryption with bcrypt hashing and MFA support.</p>
+            </div>
+            
+            <div className="border border-white/20 p-8 hover:border-red-600 transition">
+              <Activity className="w-12 h-12 mb-4" />
+              <h3 className="text-2xl font-bold mb-4">Analytics & Logs</h3>
+              <p className="text-gray-400">Comprehensive reporting and audit trails for compliance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+
+  // Login Page
+  const LoginPage = () => (
+    <div className="min-h-screen bg-white flex items-center justify-center px-6 relative">
+      <DotMatrix />
+      
+      <button 
+        onClick={() => setCurrentPage('landing')}
+        className="absolute top-6 left-6 text-sm font-bold hover:text-red-600 transition"
+      >
+        ← Back
+      </button>
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="mb-8">
+          <Circle className="w-8 h-8 fill-black mb-4" />
+          <h1 className="text-5xl font-bold mb-2">Welcome back</h1>
+          <p className="text-gray-600">Nothing to hide. Everything secure.</p>
+        </div>
+
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Email</label>
+            <input 
+              type="email" 
+              className="w-full border-2 border-black px-4 py-3 focus:outline-none focus:border-red-600 transition"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Password</label>
+            <input 
+              type="password" 
+              className="w-full border-2 border-black px-4 py-3 focus:outline-none focus:border-red-600 transition"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button 
+            onClick={() => setCurrentPage('dashboard')}
+            className="w-full bg-black text-white py-4 font-bold text-lg hover:bg-red-600 transition"
+          >
+            Login
+          </button>
+
+          <div className="text-center">
+            <button 
+              onClick={() => setCurrentPage('signup')}
+              className="text-sm hover:text-red-600 transition font-medium"
+            >
+              Don't have an account? <span className="font-bold">Sign up</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-black/10">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-gray-600">MFA Enabled</span>
+            <Lock className="w-4 h-4 text-red-600" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Signup Page
+  const SignupPage = () => (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 relative">
+      <button 
+        onClick={() => setCurrentPage('landing')}
+        className="absolute top-6 left-6 text-sm font-bold hover:text-red-600 transition"
+      >
+        ← Back
+      </button>
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="mb-8">
+          <Circle className="w-8 h-8 fill-white mb-4" />
+          <h1 className="text-5xl font-bold mb-2">Create account</h1>
+          <p className="text-gray-400">Start your journey. Nothing complex.</p>
+        </div>
+
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Full Name</label>
+            <input 
+              type="text" 
+              className="w-full bg-transparent border-2 border-white px-4 py-3 focus:outline-none focus:border-red-600 transition text-white"
+              placeholder="John Doe"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Email</label>
+            <input 
+              type="email" 
+              className="w-full bg-transparent border-2 border-white px-4 py-3 focus:outline-none focus:border-red-600 transition text-white"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Password</label>
+            <input 
+              type="password" 
+              className="w-full bg-transparent border-2 border-white px-4 py-3 focus:outline-none focus:border-red-600 transition text-white"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button 
+            onClick={() => setCurrentPage('enroll')}
+            className="w-full bg-white text-black py-4 font-bold text-lg hover:bg-red-600 hover:text-white transition"
+          >
+            Create Account
+          </button>
+
+          <div className="text-center">
+            <button 
+              onClick={() => setCurrentPage('login')}
+              className="text-sm hover:text-red-600 transition font-medium"
+            >
+              Already have an account? <span className="font-bold">Login</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Dashboard
+  const DashboardPage = () => (
+    <div className="min-h-screen bg-white">
+      {/* Sidebar */}
+      <aside className="fixed left-0 top-0 h-full w-64 bg-black text-white p-6 flex flex-col">
+        <div className="flex items-center gap-2 mb-12">
+          <Circle className="w-6 h-6 fill-white" />
+          <span className="font-bold text-xl">FaceID</span>
+        </div>
+
+        <nav className="space-y-2 flex-1">
+          <button className="w-full text-left px-4 py-3 bg-white/10 font-medium hover:bg-red-600 transition">
+            <Activity className="inline w-5 h-5 mr-3" />
+            Dashboard
+          </button>
+          <button 
+            onClick={() => setCurrentPage('enroll')}
+            className="w-full text-left px-4 py-3 font-medium hover:bg-white/10 transition"
+          >
+            <Camera className="inline w-5 h-5 mr-3" />
+            Enroll Face
+          </button>
+          <button 
+            onClick={() => setCurrentPage('verify')}
+            className="w-full text-left px-4 py-3 font-medium hover:bg-white/10 transition"
+          >
+            <Eye className="inline w-5 h-5 mr-3" />
+            Verify
+          </button>
+          <button className="w-full text-left px-4 py-3 font-medium hover:bg-white/10 transition">
+            <FileText className="inline w-5 h-5 mr-3" />
+            Reports
+          </button>
+          <button className="w-full text-left px-4 py-3 font-medium hover:bg-white/10 transition">
+            <User className="inline w-5 h-5 mr-3" />
+            Profile
+          </button>
+        </nav>
+
+        <button 
+          onClick={() => setCurrentPage('landing')}
+          className="text-sm text-gray-400 hover:text-white transition"
+        >
+          Logout →
+        </button>
+      </aside>
+
+      {/* Main Content */}
+      <main className="ml-64 p-12">
+        <div className="mb-12">
+          <div className="text-red-600 font-bold mb-2 tracking-wider text-sm">OVERVIEW</div>
+          <h1 className="text-5xl font-bold mb-4">Dashboard</h1>
+          <p className="text-gray-600">Monitor your recognition activities</p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-3 gap-6 mb-12">
+          <div className="border-2 border-black p-6">
+            <div className="text-4xl font-bold mb-2">1,247</div>
+            <div className="text-gray-600 text-sm uppercase tracking-wide">Total Recognitions</div>
+          </div>
+          <div className="border-2 border-black p-6">
+            <div className="text-4xl font-bold mb-2">98.7%</div>
+            <div className="text-gray-600 text-sm uppercase tracking-wide">Accuracy Rate</div>
+          </div>
+          <div className="border-2 border-black p-6">
+            <div className="text-4xl font-bold mb-2">12</div>
+            <div className="text-gray-600 text-sm uppercase tracking-wide">Enrolled Faces</div>
+          </div>
+        </div>
+
+        {/* Recent Activity */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6">Recent Activity</h2>
+          <div className="space-y-3">
+            {[
+              { action: 'Face Verified', user: 'John Doe', time: '2 min ago', status: 'success' },
+              { action: 'Face Enrolled', user: 'Jane Smith', time: '15 min ago', status: 'success' },
+              { action: 'Verification Failed', user: 'Unknown', time: '1 hour ago', status: 'failed' },
+              { action: 'Face Verified', user: 'Mike Johnson', time: '2 hours ago', status: 'success' },
+            ].map((item, i) => (
+              <div key={i} className="border border-black/10 p-4 flex justify-between items-center hover:border-red-600 transition">
+                <div className="flex items-center gap-4">
+                  <div className={`w-2 h-2 rounded-full ${item.status === 'success' ? 'bg-green-500' : 'bg-red-600'}`}></div>
+                  <div>
+                    <div className="font-bold">{item.action}</div>
+                    <div className="text-sm text-gray-600">{item.user}</div>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-600">{item.time}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+
+  // Enroll Face Page
+  const EnrollPage = () => (
+    <div className="min-h-screen bg-black text-white">
+      <aside className="fixed left-0 top-0 h-full w-64 bg-white text-black p-6 flex flex-col">
+        <div className="flex items-center gap-2 mb-12">
+          <Circle className="w-6 h-6 fill-black" />
+          <span className="font-bold text-xl">FaceID</span>
+        </div>
+
+        <nav className="space-y-2 flex-1">
+          <button 
+            onClick={() => setCurrentPage('dashboard')}
+            className="w-full text-left px-4 py-3 font-medium hover:bg-black/5 transition"
+          >
+            <Activity className="inline w-5 h-5 mr-3" />
+            Dashboard
+          </button>
+          <button className="w-full text-left px-4 py-3 bg-black text-white font-medium">
+            <Camera className="inline w-5 h-5 mr-3" />
+            Enroll Face
+          </button>
+          <button 
+            onClick={() => setCurrentPage('verify')}
+            className="w-full text-left px-4 py-3 font-medium hover:bg-black/5 transition"
+          >
+            <Eye className="inline w-5 h-5 mr-3" />
+            Verify
+          </button>
+        </nav>
+
+        <button 
+          onClick={() => setCurrentPage('landing')}
+          className="text-sm text-gray-400 hover:text-black transition"
+        >
+          Logout →
+        </button>
+      </aside>
+
+      <main className="ml-64 p-12">
+        <div className="mb-12">
+          <div className="text-red-600 font-bold mb-2 tracking-wider text-sm">ENROLLMENT</div>
+          <h1 className="text-5xl font-bold mb-4">Capture Your Face</h1>
+          <p className="text-gray-400">Position yourself in the frame. Nothing complicated.</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Camera Preview */}
+          <div>
+            <div className="aspect-square bg-white/5 relative overflow-hidden border-2 border-white/20">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-80 h-80 border-4 border-white/30 relative">
+                  <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-red-600"></div>
+                  <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-red-600"></div>
+                  <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-red-600"></div>
+                  <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-red-600"></div>
+                  <User className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 text-white/20" />
+                </div>
+              </div>
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center">
+                <div className="bg-red-600 px-4 py-2 font-bold text-sm">READY TO CAPTURE</div>
+              </div>
+            </div>
+
+            <button className="w-full mt-6 bg-red-600 text-white py-4 font-bold text-lg hover:bg-red-700 transition">
+              Capture Face
+            </button>
+          </div>
+
+          {/* Instructions */}
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Instructions</h3>
+              <div className="space-y-4 text-gray-400">
+                <div className="flex gap-4">
+                  <div className="text-red-600 font-bold">01</div>
+                  <div>Position your face within the frame markers</div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="text-red-600 font-bold">02</div>
+                  <div>Ensure proper lighting on your face</div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="text-red-600 font-bold">03</div>
+                  <div>Remove glasses and look directly at camera</div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="text-red-600 font-bold">04</div>
+                  <div>Stay still when capturing</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-white/20 pt-8">
+              <h3 className="text-xl font-bold mb-4">Upload Image</h3>
+              <div className="border-2 border-dashed border-white/20 p-8 text-center hover:border-red-600 transition cursor-pointer">
+                <Camera className="w-12 h-12 mx-auto mb-4 text-white/40" />
+                <div className="text-gray-400 mb-2">Or drag and drop an image</div>
+                <div className="text-sm text-gray-600">PNG, JPG up to 10MB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+
+  // Verify Page
+  const VerifyPage = () => (
+    <div className="min-h-screen bg-white">
+      <aside className="fixed left-0 top-0 h-full w-64 bg-black text-white p-6 flex flex-col">
+        <div className="flex items-center gap-2 mb-12">
+          <Circle className="w-6 h-6 fill-white" />
+          <span className="font-bold text-xl">FaceID</span>
+        </div>
+
+        <nav className="space-y-2 flex-1">
+          <button 
+            onClick={() => setCurrentPage('dashboard')}
+            className="w-full text-left px-4 py-3 font-medium hover:bg-white/10 transition"
+          >
+            <Activity className="inline w-5 h-5 mr-3" />
+            Dashboard
+          </button>
+          <button 
+            onClick={() => setCurrentPage('enroll')}
+            className="w-full text-left px-4 py-3 font-medium hover:bg-white/10 transition"
+          >
+            <Camera className="inline w-5 h-5 mr-3" />
+            Enroll Face
+          </button>
+          <button className="w-full text-left px-4 py-3 bg-white/10 font-medium">
+            <Eye className="inline w-5 h-5 mr-3" />
+            Verify
+          </button>
+        </nav>
+
+        <button 
+          onClick={() => setCurrentPage('landing')}
+          className="text-sm text-gray-400 hover:text-white transition"
+        >
+          Logout →
+        </button>
+      </aside>
+
+      <main className="ml-64 p-12">
+        <div className="mb-12">
+          <div className="text-red-600 font-bold mb-2 tracking-wider text-sm">VERIFICATION</div>
+          <h1 className="text-5xl font-bold mb-4">Verify Identity</h1>
+          <p className="text-gray-600">Submit an image for instant verification</p>
+        </div>
+
+        <div className="max-w-2xl">
+          <div className="border-2 border-black p-12 mb-6">
+            <div className="text-center mb-8">
+              <Eye className="w-20 h-20 mx-auto mb-4 text-black/20" />
+              <h3 className="text-2xl font-bold mb-2">Upload Image to Verify</h3>
+              <p className="text-gray-600">Nothing but precision</p>
+            </div>
+
+            <div className="border-2 border-dashed border-black/20 p-12 text-center hover:border-red-600 transition cursor-pointer mb-6">
+              <Camera className="w-16 h-16 mx-auto mb-4 text-black/20" />
+              <div className="font-bold mb-2">Drop image here or click to browse</div>
+              <div className="text-sm text-gray-600">PNG, JPG up to 10MB</div>
+            </div>
+
+            <button className="w-full bg-black text-white py-4 font-bold text-lg hover:bg-red-600 transition">
+              Verify Identity
+            </button>
+          </div>
+
+          <div className="bg-gray-50 border border-black/10 p-6">
+            <h3 className="font-bold mb-4 uppercase tracking-wide text-sm">Recent Verifications</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="font-medium">John Doe</span>
+                </div>
+                <span className="text-sm text-gray-600">98.5% Match</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                  <span className="font-medium">Unknown</span>
+                </div>
+                <span className="text-sm text-gray-600">No Match</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+
+  // Page Router
+  const renderPage = () => {
+    switch(currentPage) {
+      case 'landing': return <LandingPage />;
+      case 'login': return <LoginPage />;
+      case 'signup': return <SignupPage />;
+      case 'dashboard': return <DashboardPage />;
+      case 'enroll': return <EnrollPage />;
+      case 'verify': return <VerifyPage />;
+      default: return <LandingPage />;
+    }
+  };
+
+  return (
+    <div className="font-sans">
+      {renderPage()}
+      
+      {/* Navigation Dots */}
+      <div className="fixed bottom-6 right-6 bg-black/80 backdrop-blur-md p-2 rounded-full flex gap-2 z-50">
+        {['landing', 'login', 'signup', 'dashboard', 'enroll', 'verify'].map(page => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`w-2 h-2 rounded-full transition ${
+              currentPage === page ? 'bg-red-600' : 'bg-white/40 hover:bg-white/70'
+            }`}
+            title={page}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FaceRecognitionApp;
