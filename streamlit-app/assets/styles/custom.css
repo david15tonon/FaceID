@@ -1,0 +1,9 @@
+/* Custom Streamlit styles */
+[data-testid="stSidebar"] {
+    background-color: #000000;
+}
+
+.stButton>button {
+    background-color: #dc2626;
+    color: white;
+}
