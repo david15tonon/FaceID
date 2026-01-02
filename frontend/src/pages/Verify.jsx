@@ -1,0 +1,4 @@
+// Verify page
+export default function Verify() {
+  return <div>Verify Page</div>;
+}
