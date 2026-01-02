@@ -1,1 +1,1 @@
-# Core initialization
+"""Core package initialization"""

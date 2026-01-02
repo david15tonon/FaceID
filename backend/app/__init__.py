@@ -1,1 +1,1 @@
-# Backend app initialization
+"""Initialize the app package"""

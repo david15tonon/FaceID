@@ -1,12 +1,31 @@
-# Face detector
-import cv2
+import face_recognition
 import numpy as np
+from typing import List, Tuple
+
 
 class FaceDetector:
-    def __init__(self):
-        # Initialize face detection model
-        pass
+    """Face detection using face_recognition library"""
     
-    def detect(self, image):
-        # Detect faces in image
-        pass
+    def __init__(self, model: str = "hog"):
+        """
+        Initialize face detector
+        Args:
+            model: 'hog' (faster) or 'cnn' (more accurate)
+        """
+        self.model = model
+    
+    def detect(self, image: np.ndarray) -> List[Tuple[int, int, int, int]]:
+        """
+        Detect faces in image
+        Returns list of (top, right, bottom, left) coordinates
+        """
+        return face_recognition.face_locations(image, model=self.model)
+    
+    def detect_and_encode(self, image: np.ndarray) -> Tuple[List, List]:
+        """
+        Detect faces and generate encodings
+        Returns (locations, encodings)
+        """
+        locations = self.detect(image)
+        encodings = face_recognition.face_encodings(image, locations)
+        return locations, encodings

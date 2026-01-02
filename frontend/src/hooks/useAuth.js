@@ -1,5 +1,5 @@
-// Custom hook for authentication
-export function useAuth() {
-  // Authentication logic here
-  return {};
-}
+import { useAuth as useAuthContext } from '../context/AuthContext';
+
+export const useAuth = () => {
+  return useAuthContext();
+};

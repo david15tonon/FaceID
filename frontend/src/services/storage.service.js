@@ -1,13 +1,35 @@
-// Storage service
 export const storageService = {
-  setItem: (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
+  set: (key, value) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error('Error saving to localStorage', error);
+    }
   },
-  getItem: (key) => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+
+  get: (key) => {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
+    } catch (error) {
+      console.error('Error getting from localStorage', error);
+      return null;
+    }
   },
-  removeItem: (key) => {
-    localStorage.removeItem(key);
+
+  remove: (key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error('Error removing from localStorage', error);
+    }
+  },
+
+  clear: () => {
+    try {
+      localStorage.clear();
+    } catch (error) {
+      console.error('Error clearing localStorage', error);
+    }
   },
 };

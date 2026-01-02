@@ -1,1 +1,1 @@
-# ML initialization
+"""ML package initialization"""

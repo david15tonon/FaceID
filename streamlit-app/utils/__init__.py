@@ -1,1 +1,1 @@
-# Utils initialization
+"""Utils package"""

@@ -1,1 +1,1 @@
-# Routes initialization
+"""API routes package initialization"""

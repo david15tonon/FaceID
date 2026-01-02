@@ -1,25 +1,64 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: faceid-postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: facedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - faceid-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: faceid-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - faceid-network
+
+  # Backend API
   backend:
     build: ./backend
+    container_name: faceid-backend
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite:///./faceid.db
+      DATABASE_URL: postgresql://user:password@postgres:5432/facedb
+      REDIS_URL: redis://redis:6379
+      SECRET_KEY: your-secret-key-change-in-production
+    depends_on:
+      - postgres
+      - redis
     volumes:
       - ./backend:/app
+      - backend_uploads:/app/uploads
+    networks:
+      - faceid-network
 
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    environment:
-      - VITE_API_URL=http://localhost:8000
+  # Frontend (for local development)
+  # frontend:
+  #   build: ./frontend
+  #   container_name: faceid-frontend
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     VITE_API_URL: http://localhost:8000/api
+  #   networks:
+  #     - faceid-network
 
-  streamlit:
-    build: ./streamlit-app
-    ports:
-      - "8501:8501"
-    environment:
-      - API_URL=http://backend:8000
+volumes:
+  postgres_data:
+  backend_uploads:
+
+networks:
+  faceid-network:
+    driver: bridge

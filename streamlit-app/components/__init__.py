@@ -1,1 +1,1 @@
-# Components initialization
+"""Components package"""

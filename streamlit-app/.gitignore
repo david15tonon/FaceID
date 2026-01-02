@@ -1,14 +1,25 @@
-# Python
+# Dependencies
 __pycache__/
 *.py[cod]
 *$py.class
-.Python
+
+# Virtual environments
 venv/
-ENV/
+env/
+.venv
 
 # Environment
 .env
+.env.local
+
+# Streamlit
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
 .idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

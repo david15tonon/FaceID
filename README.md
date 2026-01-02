@@ -1,225 +1,214 @@
 # FaceID - Face Recognition System
 
-A comprehensive face recognition system with real-time identity verification, military-grade security, and advanced analytics.
+A comprehensive face recognition system with real-time identity verification, military-grade security, and comprehensive analytics.
 
 ## Features
 
-- 👤 **Real-time Face Recognition** - Instant identity verification in live video feeds
-- 🔒 **Military-Grade Security** - End-to-end encryption with bcrypt hashing and MFA support
-- 📊 **Analytics & Reporting** - Comprehensive dashboard with insights and audit trails
-- 🎨 **Modern UI** - Clean, minimalist design inspired by Nothing Phone aesthetic
-- 🚀 **High Performance** - Optimized for speed and accuracy
-- 🔄 **Multiple Interfaces** - Web app, API, and admin dashboard
+- 🔐 **Secure Authentication** - JWT-based auth with MFA support
+- 📷 **Face Enrollment** - Register faces via webcam or upload
+- 🔍 **Face Verification** - Real-time identity verification
+- 📊 **Analytics Dashboard** - Comprehensive metrics and insights
+- 📋 **Audit Logs** - Complete activity tracking
+- ⚙️ **Admin Panel** - Streamlit-based management interface
+- 🚀 **RESTful API** - Well-documented FastAPI backend
+- 💻 **Modern UI** - React-based responsive frontend
 
 ## Architecture
 
-```
-face-recognition-system/
-├── frontend/          # React/Vite web application (Vercel)
-├── backend/           # Python FastAPI backend
-├── streamlit-app/     # Streamlit admin/demo interface
-├── shared/            # Shared utilities and code
-├── docs/              # Documentation
-├── scripts/           # Utility scripts
-└── .github/           # CI/CD workflows
-```
+The system consists of three main components:
 
-## Technology Stack
+1. **Frontend** - React/Vite application (deployable to Vercel)
+2. **Backend** - FastAPI Python server with PostgreSQL
+3. **Streamlit App** - Admin dashboard and analytics
+
+## Tech Stack
 
 ### Frontend
-- **Framework**: React 18
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Deployment**: Vercel
+- React 18
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
 
 ### Backend
-- **Framework**: FastAPI
-- **Database**: SQLAlchemy + SQLite/PostgreSQL
-- **ML**: OpenCV, face-recognition
-- **Authentication**: JWT, bcrypt
-- **API Docs**: OpenAPI/Swagger
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- Redis
+- face_recognition (dlib)
+- OpenCV
 
 ### Streamlit App
-- **Framework**: Streamlit
-- **Purpose**: Admin dashboard and demo
+- Streamlit
+- Plotly
+- Pandas
 
 ## Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+
 - Python 3.11+
-- Docker (optional)
+- Docker & Docker Compose
+- PostgreSQL
+- Redis
 
 ### Installation
 
-1. **Clone the repository**
+1. Clone the repository:
 ```bash
 git clone https://github.com/david15tonon/FaceID.git
 cd FaceID
 ```
 
-2. **Run setup script**
+2. Run setup script:
 ```bash
-bash scripts/setup.sh
+chmod +x scripts/setup.sh
+./scripts/setup.sh
 ```
 
-### Running the Application
+3. Configure environment variables:
+   - Update `frontend/.env.local`
+   - Update `backend/.env`
+   - Update `streamlit-app/.env`
 
-#### Option 1: Using Docker
+4. Start services with Docker:
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 
-#### Option 2: Manual Start
-```bash
-bash scripts/start-dev.sh
-```
-
-#### Option 3: Individual Services
-
-**Backend**
+5. Run database migrations:
 ```bash
 cd backend
-uvicorn app.main:app --reload
+source venv/bin/activate
+alembic upgrade head
 ```
 
-**Frontend**
+6. Start the applications:
+
+**Frontend:**
 ```bash
 cd frontend
 npm run dev
+# Available at http://localhost:3000
 ```
 
-**Streamlit**
+**Backend:**
+```bash
+cd backend
+source venv/bin/activate
+uvicorn app.main:app --reload
+# Available at http://localhost:8000
+# API docs at http://localhost:8000/docs
+```
+
+**Streamlit App:**
 ```bash
 cd streamlit-app
+source venv/bin/activate
 streamlit run app.py
+# Available at http://localhost:8501
 ```
-
-## Access Points
-
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-- **Streamlit**: http://localhost:8501
 
 ## Project Structure
 
-### Frontend (`/frontend`)
 ```
-frontend/
-├── public/              # Static assets
-├── src/
-│   ├── components/      # React components
-│   ├── pages/           # Page components
-│   ├── hooks/           # Custom hooks
-│   ├── services/        # API services
-│   ├── context/         # React context
-│   ├── utils/           # Utilities
-│   └── styles/          # CSS files
-└── package.json
+face-recognition-system/
+├── frontend/              # React application
+├── backend/              # FastAPI backend
+├── streamlit-app/        # Admin dashboard
+├── shared/               # Shared code
+├── docs/                 # Documentation
+├── scripts/              # Utility scripts
+├── .github/              # CI/CD workflows
+└── docker-compose.yml    # Docker configuration
 ```
 
-### Backend (`/backend`)
-```
-backend/
-├── app/
-│   ├── api/            # API routes
-│   ├── core/           # Core configuration
-│   ├── models/         # Database models
-│   ├── schemas/        # Pydantic schemas
-│   ├── services/       # Business logic
-│   ├── ml/             # ML models
-│   └── utils/          # Utilities
-├── tests/              # Test files
-└── requirements.txt
-```
+## Documentation
 
-### Streamlit App (`/streamlit-app`)
-```
-streamlit-app/
-├── pages/              # Streamlit pages
-├── components/         # Reusable components
-├── services/           # API clients
-├── utils/              # Utilities
-└── app.py              # Main entry point
+- [API Reference](docs/api/API_REFERENCE.md)
+- [System Architecture](docs/architecture/system_design.md)
+- [Database Schema](docs/architecture/database_schema.md)
+- [Getting Started Guide](docs/user_guides/getting_started.md)
+- [Face Enrollment Guide](docs/user_guides/face_enrollment.md)
+
+## Deployment
+
+### Frontend (Vercel)
+```bash
+cd frontend
+vercel --prod
 ```
 
-## Development
+### Backend (Docker)
+Build and deploy the Docker container to your cloud provider.
 
-### Running Tests
+### Streamlit (Streamlit Cloud)
+1. Push code to GitHub
+2. Connect repository on streamlit.io
+3. Set `streamlit-app/app.py` as main file
+4. Configure environment variables
 
-**Backend Tests**
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/login` - User login
+- `POST /api/auth/signup` - User registration
+- `GET /api/auth/me` - Get current user
+
+### Faces
+- `POST /api/faces/enroll` - Enroll new face
+- `POST /api/faces/verify` - Verify face
+- `GET /api/faces/user/{user_id}` - Get user faces
+- `DELETE /api/faces/{face_id}` - Delete face
+
+### Users, Reports, Logs
+- See [API Reference](docs/api/API_REFERENCE.md) for complete documentation
+
+## Testing
+
+Run tests:
+```bash
+./scripts/run_tests.sh
+```
+
+Backend tests only:
 ```bash
 cd backend
 pytest
 ```
 
-**Frontend Tests**
-```bash
-cd frontend
-npm test
-```
-
-### Code Style
-
-- **Python**: Follow PEP 8
-- **JavaScript**: ESLint configuration
-- **Git**: Conventional commits
-
-## API Documentation
-
-See [API Documentation](docs/api/README.md) for detailed API endpoints and usage.
-
-## Deployment
-
-See [Deployment Guide](docs/deployment/README.md) for deployment instructions.
-
-## Documentation
-
-- [API Documentation](docs/api/README.md)
-- [Architecture](docs/architecture/README.md)
-- [Deployment Guide](docs/deployment/README.md)
-- [User Guide](docs/user-guide/README.md)
-
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## Security
 
-- End-to-end encryption
-- Bcrypt password hashing
-- JWT authentication
+- Passwords hashed with bcrypt
+- JWT token authentication
 - MFA support
-- Comprehensive audit logging
+- SQL injection protection via ORM
+- Input validation with Pydantic
+- HTTPS required in production
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details
 
 ## Support
 
-For support, email support@faceid.com or open an issue on GitHub.
-
-## Roadmap
-
-- [ ] Multi-factor authentication
-- [ ] Real-time notifications
-- [ ] Mobile app
-- [ ] Cloud deployment templates
-- [ ] Advanced analytics
-- [ ] API rate limiting
-- [ ] Webhooks support
+For issues and questions:
+- Open an issue on GitHub
+- Check the documentation
+- Review existing issues
 
 ## Acknowledgments
 
-- OpenCV for computer vision
-- FastAPI for the backend framework
-- React for the frontend framework
-- Streamlit for the admin interface
-
----
-
-Built with ❤️ by the FaceID Team
+- face_recognition library (dlib)
+- FastAPI framework
+- React community
+- Streamlit team
