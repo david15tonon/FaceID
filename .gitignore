@@ -69,5 +69,4 @@ htmlcov/
 # Streamlit
 .streamlit/secrets.toml
 
-# Vercel
-.vercel
+
