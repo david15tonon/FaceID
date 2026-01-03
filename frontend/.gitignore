@@ -7,7 +7,7 @@ node_modules
 coverage
 
 # Production
-# dist folder is now tracked for deployment
+# dist folder tracked for deployment - contains built assets for production
 build
 
 # Misc
