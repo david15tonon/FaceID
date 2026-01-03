@@ -6,7 +6,9 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+# Python dist only (not frontend/dist)
+backend/dist/
+streamlit-app/dist/
 downloads/
 eggs/
 .eggs/
@@ -31,7 +33,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnp
 .pnp.js
+# Ignore dist in general but not frontend/dist
 dist/
+!frontend/dist/
 .cache/
 
 # Environment
